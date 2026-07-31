@@ -98,7 +98,7 @@ export function LoginForm() {
 
       <Button
         type='submit'
-        className='w-full bg-[#C12116]'
+        className='w-full bg-[#1C65DA]'
         disabled={loginMutation.isPending}
       >
         {loginMutation.isPending ? 'Sedang login...' : 'Login'}

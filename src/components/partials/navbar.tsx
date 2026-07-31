@@ -45,14 +45,14 @@ const Navbar = () => {
             variant='outline'
             className='h-11 min-w-36 rounded-full border-slate-300 bg-white px-8 font-semibold text-slate-900 shadow-none hover:bg-slate-50'
           >
-            <Link href='/login'>Login</Link>
+            <Link href='/auth/login'>Login</Link>
           </Button>
 
           <Button
             asChild
             className='h-11 min-w-36 rounded-full bg-blue-600 px-8 font-semibold text-white shadow-none hover:bg-blue-700'
           >
-            <Link href='/register'>Register</Link>
+            <Link href='/auth/register'>Register</Link>
           </Button>
         </div>
 

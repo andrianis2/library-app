@@ -163,16 +163,16 @@ export default function RegisterForm() {
 
       <Button
         type='submit'
-        className='w-full'
+        className='w-full bg-[#1C65DA]'
         disabled={registerMutation.isPending}
       >
-        {registerMutation.isPending ? 'Mendaftarkan...' : 'Daftar'}
+        {registerMutation.isPending ? 'Mendaftarkan...' : 'Submit'}
       </Button>
 
       <p className='text-center text-sm text-muted-foreground'>
         Sudah mempunyai akun?{' '}
         <Link
-          href='/login'
+          href='/auth/login'
           className='font-medium text-primary hover:underline'
         >
           Login
