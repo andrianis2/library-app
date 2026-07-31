@@ -38,7 +38,8 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop navigation */}
-        <div className='hidden items-center gap-4 md:flex'>
+
+        <div className='hidden shrink-0 items-center gap-3 md:flex'>
           <Button
             asChild
             variant='outline'
