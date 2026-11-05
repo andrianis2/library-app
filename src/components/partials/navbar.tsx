@@ -136,7 +136,7 @@ export default function Navbar() {
                       className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm hover:bg-gray-100"
                     >
                       <UserRound className="h-4 w-4" />
-                      Profil Saya
+                      Profile
                     </Link>
 
                     <Link
@@ -145,7 +145,16 @@ export default function Navbar() {
                       className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm hover:bg-gray-100"
                     >
                       <BookOpen className="h-4 w-4" />
-                      Peminjaman Saya
+                      Borrowed List
+                    </Link>
+
+                    <Link
+                      href="/reviews"
+                      onClick={() => setDropdownOpen(false)}
+                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm hover:bg-gray-100"
+                    >
+                      <BookOpen className="h-4 w-4" />
+                      Reviews
                     </Link>
 
                     <button

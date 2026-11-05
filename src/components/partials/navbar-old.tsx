@@ -49,16 +49,18 @@ const Navbar = () => {
 
         {/* Mobile navigation */}
         <Sheet>
-          <SheetTrigger asChild>
-            <Button
+          <SheetTrigger
+            render={
+              <Button
               type='button'
               variant='ghost'
               size='icon'
               className='md:hidden'
               aria-label='Buka navigasi utama'
-            >
-              <Menu className='size-6' aria-hidden='true' />
-            </Button>
+              />
+            }
+          >
+            <Menu className='size-6' aria-hidden='true' />
           </SheetTrigger>
 
           <SheetContent side='right' className='w-[300px] sm:w-[360px]'>
@@ -75,19 +77,26 @@ const Navbar = () => {
             </SheetHeader>
 
             <div className='mt-8 flex flex-col gap-3'>
-              <SheetClose asChild>
-                <Button asChild variant='outline' className='w-full'>
-                  <Link href='/login'>Login</Link>
-                </Button>
+              <SheetClose
+                render={
+                  <Link
+                    href='/login'
+                    className='inline-flex h-9 w-full items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground'
+                  />
+                }
+              >
+                Login
               </SheetClose>
 
-              <SheetClose asChild>
-                <Button
-                  asChild
-                  className='w-full bg-blue-600 hover:bg-blue-700'
-                >
-                  <Link href='/register'>Register</Link>
-                </Button>
+              <SheetClose
+                render={
+                  <Link
+                    href='/register'
+                    className='inline-flex h-9 w-full items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700'
+                  />
+                }
+              >
+                Register
               </SheetClose>
             </div>
           </SheetContent>

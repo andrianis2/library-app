@@ -52,7 +52,9 @@ export function Category() {
                 type='button'
                 variant='outline'
                 aria-pressed={isSelected}
-                onClick={() => setSelectedCategory(category.id, category.name)}
+                onClick={() =>
+                  setSelectedCategory(Number(category.id), category.name)
+                }
                 className={cn(
                   'h-16 justify-start rounded-xl',
                   isSelected &&

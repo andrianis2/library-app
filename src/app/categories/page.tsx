@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { Star, BookOpen } from "lucide-react";
+import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,6 +15,7 @@ import {
 
 import {
   getCategories,
+  getAllBooks,
   getBooksByCategory,
 } from "@/services/category-service";
 
@@ -42,7 +43,7 @@ export default function CategoryPage() {
     queryKey: ["category-books", selectedCategoryId],
     queryFn: () =>
       selectedCategoryId
-        ? getBooksByCategory(selectedCategoryId)
+      ? getBooksByCategory(Number(selectedCategoryId))
         : getAllBooks(),
   });
 

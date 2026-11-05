@@ -1,12 +1,11 @@
 
 "use client";
 
-import { useParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useParams, useRouter } from "next/navigation";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   BookOpen,
   Star,
-  ShoppingCart,
   ChevronRight,
   CalendarDays,
   Library,
@@ -22,6 +21,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
+
+import { useSelector } from "react-redux";
+import { toast } from "sonner";
+
+import { addCartItem } from "@/services/cart-service";
+import type { RootState } from "@/store/store";
 
 function RatingStars({ rating }: { rating: number }) {
   return (
@@ -78,6 +83,9 @@ function ReviewCard({ review }: { review: Review }) {
 export default function BookDetailPage() {
   const params = useParams();
   const id = String(params.id);
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const token = useSelector((state: RootState) => state.auth.token);
 
   const {
     data: book,
@@ -88,6 +96,44 @@ export default function BookDetailPage() {
     queryKey: ["book-detail", id],
     queryFn: () => getBookById(id),
     enabled: Boolean(id),
+  });
+
+  const addToCartMutation = useMutation({
+    mutationFn: () => {
+      if (!token) {
+        throw new Error("Silakan login terlebih dahulu");
+      }
+
+      if (!book) {
+        throw new Error("Buku tidak ditemukan");
+      }
+
+      return addCartItem(book.id, token);
+    },
+
+    onSuccess: () => {
+      toast.success("Buku berhasil ditambahkan ke keranjang");
+
+      queryClient.invalidateQueries({
+        queryKey: ["cart-items"],
+      });
+
+      router.push("/cart");
+    },
+
+    onError: (error: Error) => {
+      const message = error.message;
+
+      if (message.toLowerCase().includes("already in cart")) {
+        toast.warning("Buku sudah ada di keranjang");
+      } else if (message.toLowerCase().includes("out of stock")) {
+        toast.error("Stok buku sedang habis");
+      } else if (message.toLowerCase().includes("book not found")) {
+        toast.error("Buku tidak ditemukan");
+      } else {
+        toast.error(message);
+      }
+    },
   });
 
   if (isLoading) {
@@ -257,12 +303,13 @@ export default function BookDetailPage() {
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-3 pt-2">
               <Button
-                variant="outline"
-                className="min-w-40 rounded-full"
-                disabled
+                className="w-full"
+                disabled={!token || addToCartMutation.isPending}
+                onClick={() => addToCartMutation.mutate()}
               >
-                <ShoppingCart size={17} className="mr-2" />
-                Add to Cart
+                {addToCartMutation.isPending
+                  ? "Adding..."
+                  : "Add to Cart"}
               </Button>
 
               <Button

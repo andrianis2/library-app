@@ -1,34 +1,20 @@
-import type { Book } from '@/constant/book';
+import type { Book as RecommendedBook } from '@/constant/recommended-data';
+import type { Book } from '@/types/book';
 
 type RecommendationApiResponse = {
   success: boolean;
   message: string;
   data: {
     mode: string;
-    books: Book[];
+    books: RecommendedBook[];
   };
 };
-
-export interface BookDetail {
-  id: number;
-  title: string;
-  author?: string;
-  description?: string;
-  cover_image?: string;
-  image?: string;
-  category?: string;
-  category_name?: string;
-  isbn?: string;
-  publisher?: string;
-  published_year?: number | string;
-  stock?: number;
-}
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getRecommendedBooks(
   categoryId: number | null
-): Promise<Book[]> {
+): Promise<RecommendedBook[]> {
   if (!API_URL) {
     throw new Error('NEXT_PUBLIC_API_URL belum dikonfigurasi');
   }
@@ -67,7 +53,7 @@ export async function getRecommendedBooks(
 
 export async function getBookById(
   id: string | number
-): Promise<BookDetail> {
+): Promise<Book> {
   const response = await fetch(`${API_URL}/api/books/${id}`, {
     headers: {
       Accept: "application/json",
@@ -84,5 +70,5 @@ export async function getBookById(
 
   const result = await response.json();
 
-  return (result.data ?? result) as BookDetail;
+  return (result.data ?? result) as Book;
 }

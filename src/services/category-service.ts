@@ -1,5 +1,3 @@
-import type { Category } from '@/constant/category-data';
-
 type CategoryApiResponse = {
   success: boolean;
   message: string;
