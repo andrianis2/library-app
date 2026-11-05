@@ -9,6 +9,21 @@ type RecommendationApiResponse = {
   };
 };
 
+export interface BookDetail {
+  id: number;
+  title: string;
+  author?: string;
+  description?: string;
+  cover_image?: string;
+  image?: string;
+  category?: string;
+  category_name?: string;
+  isbn?: string;
+  publisher?: string;
+  published_year?: number | string;
+  stock?: number;
+}
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function getRecommendedBooks(
@@ -48,4 +63,26 @@ export async function getRecommendedBooks(
   }
 
   return result.data.books;
+}
+
+export async function getBookById(
+  id: string | number
+): Promise<BookDetail> {
+  const response = await fetch(`${API_URL}/api/books/${id}`, {
+    headers: {
+      Accept: "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      throw new Error("Buku tidak ditemukan.");
+    }
+
+    throw new Error("Gagal mengambil detail buku.");
+  }
+
+  const result = await response.json();
+
+  return (result.data ?? result) as BookDetail;
 }

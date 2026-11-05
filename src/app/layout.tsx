@@ -4,6 +4,7 @@ import { Quicksand } from 'next/font/google';
 import './globals.css';
 
 import { cn } from '@/lib/utils';
+import StoreProvider from "@/providers/StoreProvider";
 import { QueryProvider } from '@/providers/query-provider';
 
 const quicksand = Quicksand({
@@ -32,7 +33,11 @@ export default function RootLayout({
           'min-h-screen bg-white text-slate-950 antialiased'
         )}
       >
-        <QueryProvider>{children}</QueryProvider>
+        <StoreProvider>
+          <QueryProvider>
+            {children}
+          </QueryProvider>
+        </StoreProvider>
       </body>
     </html>
   );

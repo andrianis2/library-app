@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { BookCard } from '@/components/books/book-card';
 import { getRecommendedBooks } from '@/services/book-service';
 import { useBookFilterStore } from '@/store/book-filter-store';
+import Link from "next/link";
 
 export function Recommendation() {
   const selectedCategoryId = useBookFilterStore(
@@ -62,9 +63,17 @@ export function Recommendation() {
               isFetching && 'opacity-60'
             )}
           >
-            {books.map((book) => (
-              <BookCard key={book.id} book={book} />
-            ))}
+            
+          {books.map((book) => (
+            <Link
+              key={book.id}
+              href={`/books/${book.id}`}
+              className="block rounded-xl transition hover:-translate-y-1 hover:shadow-lg"
+            >
+              <BookCard book={book} />
+            </Link>
+          ))}
+
           </div>
         )}
       </div>
